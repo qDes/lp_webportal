@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+	
+	{% block content %}
+		<h2> Posts </h2>
+		{% for post in posts_list %}
+		<h3> {{ post.title }} </h3>
+
+		<h4> {{ post.text }} </h4>
+		{% for url in post.url %}
+			<img src="{{ url }}" class="img-fluid" alt="Responsive image">
+		{% endfor %}
+		<p> {{ post.date }} </p>
+		<p> #{{ post.tag }}
+		<hr />
+		{% endfor %}
+	{% endblock %}
+			
