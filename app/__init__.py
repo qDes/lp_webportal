@@ -1,35 +1,18 @@
 from flask import Flask
-from flask import render_template
-import pymongo
-
+from flask import render_template, current_app
 import datetime
 import json
-#from mongo_settings import MONGO_KEY
 
+from app.db import mongo
+from app.posts.views import blueprint as posts_blueprint
 
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile("config.py")
-    #db.init_app(app)
-    MONGO_KEY = app.config.get("MONGO_KEY")
-    client = pymongo.MongoClient(MONGO_KEY)
-    db = client.testdb
-    #cursor = db.content.find({})
-
-    @app.route('/')
-    def index():
-        #print(list(cursor))
-        title = "RD"
-        '''
-        with open('siteapp/content.json','r') as f:
-            posts_list = json.loads(f.read())
-        '''
-        cursor = db.content.find({}).sort('_id', pymongo.DESCENDING).limit(20)
-        posts_list = list(cursor)
-        #print(posts_list)
-        return render_template('index.html',page_title=title, 
-                posts_list=posts_list)
-
+    mongo.init_app(app)
+    
+    app.register_blueprint(posts_blueprint)
+    
     return app
 
 
