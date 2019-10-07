@@ -10,7 +10,7 @@ app = create_app()
 with app.app_context():
     username = input("Enter username:")
 
-    if User.objects(username="username"):
+    if User.objects(username=username):
         print(f"{username} already exists.")
         sys.exit(0)
 
