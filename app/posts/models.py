@@ -1,8 +1,4 @@
 import datetime
-
-#from flask_mongoengine import MongoEngine
-#db = MongoEngine()
-
 from app.db import db
 
 class Post(db.Document):
