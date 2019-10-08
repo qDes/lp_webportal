@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.db import db
 
-class User(db.Document):
+class User(db.Document, UserMixin):
     username = db.StringField(max_length=25,required=True, unique=True)
     password = db.StringField(max_length=150,required=True)
     role = db.StringField(max_length=25)
