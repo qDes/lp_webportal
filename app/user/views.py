@@ -20,10 +20,6 @@ def process_login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.objects.get(username=form.username.data)
-        print('#'*100)
-        print(dir(user))
-        #print(user.check_password(123),user.check_password(123456))
-        print('#'*100)
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('You are logged in')
