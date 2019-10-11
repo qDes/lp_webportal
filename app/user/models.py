@@ -7,6 +7,7 @@ class User(db.Document, UserMixin):
     username = db.StringField(max_length=25,required=True, unique=True)
     password = db.StringField(max_length=150,required=True)
     role = db.StringField(max_length=25)
+    email = db.StringField(max_length=100)
 
     def __repr__(self):
         return f"User {self.username}"
