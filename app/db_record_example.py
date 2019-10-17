@@ -1,11 +1,13 @@
 import datetime
 from config import MONGO_URI
 from mongoengine import connect
+from posts.models import Post
+
 
 from flask_mongoengine import MongoEngine
 
 db = MongoEngine()
-
+'''
 class Post(db.Document):
     title = db.StringField(required=True)
     tag = db.StringField(max_length=25)
@@ -15,7 +17,7 @@ class Post(db.Document):
 
     def __repr__(self):
         return f"Post {self.title}"
-
+'''
 connect(db='testdb',host=MONGO_URI)
 
 

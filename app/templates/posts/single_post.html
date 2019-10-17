@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}			
+	{% for url in post.urls %}
+		<img src="{{ url }}" class="img-fluid" alt="Responsive image">
+	{% endfor %}
+	<h4> {{ post.text }} </h4>
+	<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
+	
+	{% if post.comments %}
+	<h4> Comments: </h4>
+		{% for comment in post.comments %}
+		<div class="card">
+				    <div class="card-body">
+				        <p class="card-text">{{ comment.text }}</p>
+				        <p class="card-text">
+				            <small>Posted: {{ comment.created.strftime('%d/%m/%Y %H:%M:%S') }} | 
+				                Author: {{ comment.from_user.username }}</small>
+				        </p>
+				    </div>
+				</div>
+		{% endfor %}
+	{% endif %}
+
+	{% if current_user.is_authenticated %}
+	<form action="{{ url_for('posts.add_comment') }}" method="POST">
+	    {{ comment_form.hidden_tag() }}
+	    <div class="form-group">
+	        {{ comment_form.comment_text.label }}
+	        {{ comment_form.comment_text() }}
+	    </div>
+	    {{ comment_form.submit() }}
+	</form>
+	{% else %}
+			<p><a href="{{ url_for('user.login', next=request.full_path) }}">Log in</a>, to comment.</p>
+	{% endif %}
+{% endblock %}
