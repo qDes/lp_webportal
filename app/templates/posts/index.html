@@ -1,24 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-	{{ pagination.info }}
-	{{ pagination.links }}
-
-
-{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<div class="alert alert-warning" role="alert">
-			{% for message in messages %}
-				{{ message }}<br>
-			{% endfor %}
-		</div>
-	{% endif %}
-{% endwith %}
-	
+{% include "messages.html" %}
 <div class="row">
 	<div class="col-8">
 		<h2> Posts </h2>
+
+	{{ pagination.links }}
 		{% for post in posts_list.items %}
 
 			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
@@ -38,6 +26,7 @@
 <div class="col-4">
 </div>
 
+{{ pagination.info }}
 {{ pagination.links }}
 
 
