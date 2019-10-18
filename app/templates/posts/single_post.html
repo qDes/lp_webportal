@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block content %}			
+{% block content %}		
+	
 	{% for url in post.urls %}
 		<img src="{{ url }}" class="img-fluid" alt="Responsive image">
 	{% endfor %}

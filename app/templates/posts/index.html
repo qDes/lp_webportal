@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+	{{ pagination.info }}
+	{{ pagination.links }}
+
+
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 		<div class="alert alert-warning" role="alert">
@@ -14,22 +19,27 @@
 <div class="row">
 	<div class="col-8">
 		<h2> Posts </h2>
-		{% for post in posts_list %}
-		<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
-		
-		{% for url in post.urls %}
-			<img src="{{ url }}" class="img-fluid" alt="Responsive image">
-		{% endfor %}
-		<h4> {{ post.text }} </h4>
-		<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
-		
-		<p> #{{ post.tag }} </p>
-		<hr />
+		{% for post in posts_list.items %}
+
+			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
+			<small> Post #{{ loop.index + pagination.skip }} </small> <br>
+
+			{% for url in post.urls %}
+				<img src="{{ url }}" class="img-fluid" alt="Responsive image">
+			{% endfor %}
+			<h4> {{ post.text }} </h4>
+			<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
+			
+			<p> #{{ post.tag }} </p>
+			<hr />
 		{% endfor %}
 	</div>
 	</div>
 <div class="col-4">
 </div>
-	
+
+{{ pagination.links }}
+
+
 {% endblock %}
 		

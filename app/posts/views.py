@@ -1,5 +1,6 @@
-from flask import abort, render_template, Blueprint, current_app, redirect
+from flask import abort, render_template, Blueprint, current_app, redirect, request
 from flask_login import login_required, current_user
+from flask_paginate import Pagination, get_page_parameter
 
 from app.posts.models import Post, Comment
 from app.posts.forms import CommentForm
@@ -10,9 +11,19 @@ blueprint = Blueprint("posts", __name__)
 @blueprint.route('/')
 def index():
     title = "Web Portal"
-    posts_list = list(Post.objects.order_by('-posted'))
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    #posts_list = list(Post.objects.order_by('-posted'))
+    posts_list = Post.objects.order_by('-posted').paginate(page=page,per_page=10)
+    pagination = Pagination(page=page,
+            total = Post.objects.count(),css_framework='bootstrap4',
+            search=search, record_name='posts')
+    print(pagination)
     return render_template('posts/index.html',page_title=title,
-            posts_list=posts_list)
+            posts_list=posts_list, pagination=pagination)
 
 @blueprint.route('/posts/<string:post_id>')
 def single_post(post_id):

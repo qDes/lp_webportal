@@ -36,7 +36,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('news.index'))
     form = RegistrationForm()
-    title = "Регистрация"
+    title = "Registration"
     return render_template('user/registration.html', page_title=title, form=form)
 
 
