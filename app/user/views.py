@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, current_app, redirect, url_for, fl
 from flask_login import login_user, logout_user, current_user
 from app.user.models import User
 from app.user.forms import LoginForm, RegistrationForm
+from app.utils import get_redirect_target
 
 blueprint = Blueprint("user", __name__, url_prefix='/users')
 
@@ -9,8 +10,8 @@ blueprint = Blueprint("user", __name__, url_prefix='/users')
 def login():
     
     if current_user.is_authenticated:
-        return redirect(url_for("posts.index"))
-    
+        return redirect(get_redirect_target())#redirect(url_for("posts.index"))
+        
     title = "Authentication"
     login_form = LoginForm()
     return render_template("user/login.html",page_title=title, form=login_form)
@@ -23,13 +24,16 @@ def process_login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('You are logged in')
+            return redirect(get_redirect_target())
+        else:
+            flash('Wrong username or password')
             return redirect(url_for('posts.index'))
 
 @blueprint.route("/logout")
 def logout():
     logout_user()
     flash("Logout")
-    return redirect(url_for("posts.index"))
+    return redirect(get_redirect_target())
 
 @blueprint.route('/register')
 def register():
@@ -52,6 +56,6 @@ def process_reg():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash("Ошибка в поле {}: {}".format(getattr(form,field).label.text, error))
+                flash("Error in field {}: {}".format(getattr(form,field).label.text, error))
 
         return redirect(url_for('user.register'))

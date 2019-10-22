@@ -3,7 +3,7 @@
 {% block content %}
 {% include "messages.html" %}
 <div class="row">
-	<div class="col-8">
+	<div class="posts-index">
 		<h2> Posts </h2>
 
 	{{ pagination.links }}
@@ -16,15 +16,14 @@
 				<img src="{{ url }}" class="img-fluid" alt="Responsive image">
 			{% endfor %}
 			<h4> {{ post.text }} </h4>
-			<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
-			
 			<p> #{{ post.tag }} </p>
+			<small> Comments: {{ post.comments|length }} </small>
+			<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
 			<hr />
 		{% endfor %}
 	</div>
 	</div>
-<div class="col-4">
-</div>
+
 
 {{ pagination.info }}
 {{ pagination.links }}
