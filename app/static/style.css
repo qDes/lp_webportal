@@ -3,6 +3,14 @@
     text-align: left;
 
 }
+
+.admin-tool {
+
+}
+.admin-tool img{
+    max-height: 20%;
+    max-width: 20%;
+}
 .posts-index img{
     border: 1px solid #ddd;
     border-radius: 4px;

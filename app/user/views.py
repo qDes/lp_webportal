@@ -24,10 +24,10 @@ def process_login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('You are logged in')
-            return redirect(get_redirect_target())
+            return redirect(url_for('posts.index'))
         else:
             flash('Wrong username or password')
-            return redirect(url_for('posts.index'))
+            return redirect(get_redirect_target())#url_for('posts.index'))
 
 @blueprint.route("/logout")
 def logout():

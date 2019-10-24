@@ -84,11 +84,13 @@ def add_post_proc():
     print(2)
     #if form.validate_on_submit():
     print(current_user.id)
+    user = User.objects(id=current_user.id).get()
     print(3)
     post = Post(title=form.title.data,
             tag=form.tag.data,
             text=form.text.data,
             urls=[form.url.data],
+            user=user,
             )
     print(post)
     post.save()

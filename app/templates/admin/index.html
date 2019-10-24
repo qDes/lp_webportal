@@ -3,12 +3,36 @@
 {% block content %}			
 
 <h1>Admin content</h1>
+	<div class=" admin-tool"> 
 	<div class="row">
+		
 		<div class="col-6">
 			<h2>Last Posts</h2>
+			{% for post in posts_list %}
+
+			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
+			{% if current_user.is_admin %}
+
+	        	<form action="{{ url_for('posts.delete_post') }}" method="POST" class=delete-entry>
+						<input type="hidden" name="id_" value="{{ post.id }}">
+						<input type="submit" value="Delete post" class="btn-danger"/>
+				</form>
+			{% endif %}
+
+			{% for url in post.urls %}
+				<small><img src="{{ url }}" alt="Responsive image"></small>
+			{% endfor %}
+			<h4> {{ post.text }} </h4>
+			<p> #{{ post.tag }} </p>
+			<small> Comments: {{ post.comments|length }} </small>
+			<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
+			<hr />
+		{% endfor %}
 		</div>
 		<div class="col-6">
 			<h2> Last Comments</h2>
 		</div>
+		</div>
+
 	</div>
 {% endblock %}
