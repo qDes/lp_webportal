@@ -10,6 +10,13 @@
 		{% for post in posts_list.items %}
 
 			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
+			{% if current_user.is_admin %}
+				 {{ post.id }}
+	        	<form action="{{ url_for('posts.delete_post') }}" method="POST" class=delete-entry>
+						<input type="hidden" name="id_" value="{{ post.id }}">
+						<input type="submit" value="Delete post" class="btn-danger"/>
+				</form>
+			{% endif %}
 			<small> Post #{{ loop.index + pagination.skip }} </small> <br>
 
 			{% for url in post.urls %}
