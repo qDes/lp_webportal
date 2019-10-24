@@ -11,6 +11,8 @@
 			{% for post in posts_list %}
 
 			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"> {{ post.title }} </a></h3>
+			<small> Author: {{ post.user.username }}</small> <br>
+
 			{% if current_user.is_admin %}
 
 	        	<form action="{{ url_for('posts.delete_post') }}" method="POST" class=delete-entry>
