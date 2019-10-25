@@ -1,0 +1,23 @@
+{% for comment in comments_list %}
+
+<div class="card">
+		    <div class="card-body">
+		        <p class="card-text">{{ comment.text }}</p>
+		        <p class="card-text">
+		            <small>Posted: {{ comment.created.strftime('%d/%m/%Y %H:%M:%S') }} | 
+		                Author: {{ comment.from_user.username }}</small>
+		        </p>
+		        
+		        {% if current_user.is_admin %}
+		        {{ comment.id }}
+		        	<form action="{{ url_for('posts.delete_comment') }}" method="POST" class=delete-entry>
+  						<input type="hidden" name="id_" value="{{ comment.id }}">
+  						<input type="submit" value="Delete" />
+					</form>
+		        {% endif %}
+
+		    </div>
+</div>
+
+
+{% endfor %}

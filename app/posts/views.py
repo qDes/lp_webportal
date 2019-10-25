@@ -79,21 +79,15 @@ def add_post():
 
 @blueprint.route('/posts/add_post_proc',methods=['POST'])
 def add_post_proc():
-    print(1)
     form = PostAddForm()
-    print(2)
     #if form.validate_on_submit():
-    print(current_user.id)
     user = User.objects(id=current_user.id).get()
-    print(3)
     post = Post(title=form.title.data,
             tag=form.tag.data,
             text=form.text.data,
             urls=[form.url.data],
             user=user,
             )
-    print(post)
     post.save()
-    print('4')
     flash('Add post')
     return redirect(url_for("posts.index"))#redirect(get_redirect_target())
