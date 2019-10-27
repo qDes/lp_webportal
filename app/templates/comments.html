@@ -1,0 +1,17 @@
+{% for comment in comments_list %}
+
+<div class="card">
+		    <div class="card-body">
+		        <p class="card-text">{{ comment.text }}</p>
+		        <p class="card-text">
+		            <small>Posted: {{ comment.created.strftime('%d/%m/%Y %H:%M:%S') }} | 
+		                Author: {{ comment.from_user.username }}</small>
+		        </p>
+		        
+		        {% include "delete_comment.html" %}
+
+		    </div>
+</div>
+
+
+{% endfor %}

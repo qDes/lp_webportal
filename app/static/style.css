@@ -1,0 +1,44 @@
+.post-text-admin{
+    font-size: 12px;
+
+}
+.post-text-index{
+    font-size: 100%;
+    text-align: justify;
+}
+.posts-index {
+    text-align: left;
+
+}
+
+.admin-tool {
+
+}
+.admin-tool img{
+    max-height: 20%;
+    max-width: 20%;
+}
+.posts-index img{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.pagination-page-info b {
+    color: black;
+    background: #6aa6ed;
+    padding-left: 2px;
+    padding: .1em .25em;
+    font-size: 550%;
+}
+.pagination-page-info {
+    padding: .6em;
+    padding-left: 0;
+    width: 40em;
+    margin: .5em;
+    margin-left: 0;
+    font-size: 12px;
+}
