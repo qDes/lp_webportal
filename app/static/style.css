@@ -1,4 +1,11 @@
+.post-text-admin{
+    font-size: 12px;
 
+}
+.post-text-index{
+    font-size: 100%;
+    text-align: justify;
+}
 .posts-index {
     text-align: left;
 

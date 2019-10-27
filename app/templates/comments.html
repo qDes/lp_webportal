@@ -8,13 +8,7 @@
 		                Author: {{ comment.from_user.username }}</small>
 		        </p>
 		        
-		        {% if current_user.is_admin %}
-		        {{ comment.id }}
-		        	<form action="{{ url_for('posts.delete_comment') }}" method="POST" class=delete-entry>
-  						<input type="hidden" name="id_" value="{{ comment.id }}">
-  						<input type="submit" value="Delete" />
-					</form>
-		        {% endif %}
+		        {% include "delete_comment.html" %}
 
 		    </div>
 </div>

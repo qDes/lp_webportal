@@ -54,7 +54,6 @@ def add_comment():
 def delete_comment():
     form = DeleteForm()
     id_ = form.id_.data
-    #print('##'*100)
     comment = Comment.objects(id=id_).get()
     comment.delete()
     return redirect(get_redirect_target())
