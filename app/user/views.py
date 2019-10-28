@@ -33,7 +33,7 @@ def process_login():
 def logout():
     logout_user()
     flash("Logout")
-    return redirect(get_redirect_target())
+    return redirect(url_for('posts.index'))
 
 @blueprint.route('/register')
 def register():
