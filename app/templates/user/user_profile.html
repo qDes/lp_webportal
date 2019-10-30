@@ -1,13 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block content %}
-{% include "messages.html" %}
-<div class="row">
-	<div class="posts-index">
-		<h2> Posts </h2>
+{% block content %}		
+	User page.
+	{{ pagination.links }} 
 
-	{{ pagination.links }}
-		{% for post in posts_list.items %}
+		{% for post in user_posts.items %}
 
 		<div class="card" style="width: 40rem; background-color: #91FEE5;">
 		{% for url in post.urls %}
@@ -25,15 +22,7 @@
 		  </div>
 		</div>
 
-
 		{% endfor %}
-	</div>
-	</div>
-
-
-{# {{ pagination.info }} #}
-{{ pagination.links }} 
-
+	{{ pagination.links }} 
 
 {% endblock %}
-		
