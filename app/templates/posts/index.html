@@ -9,26 +9,28 @@
 	{{ pagination.links }}
 		{% for post in posts_list.items %}
 
-			<h3><a href="{{ url_for('posts.single_post', post_id=post.id | string) }}" style="color:red;"> {{ post.title }} </a></h3>
-			{% include "delete_comment.html" %}
-			<small > Post #{{ loop.index + pagination.skip }} </small> <br>
-			<small style="color:red;"> Author: {{ post.user.username }}</small> <br>
+		<div class="card" style="width: 40rem; background-color: #91FEE5;">
+		{% for url in post.urls %}
+		  <img src="{{ url }}" class="card-img-top" alt="...">
+		{% endfor %}
+		  <div class="card-body">
+		  	<a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"style="font-size: 250%"> {{ post.title }} </a>
+		    <p class="card-text">{{ post.text }}</p>
+		    <small style="color:;"> Author: {{ post.user.username }}</small> <br>
+		   	<p style="color:;"> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
+		   	<small style=""> Comments: {{ post.comments|length }} </small> 
+		   	{% include "delete_post.html" %}
+		  </div>
+		</div>
 
-			{% for url in post.urls %}
-				<img src="{{ url }}" class="img-fluid" alt="Responsive image">
-			{% endfor %}
-			<p class="post-text-index" style="color:red;"> {{ post.text }} </p>
-			<p style="color:red;"> #{{ post.tag }} </p>
-			<small style="color:red;"> Comments: {{ post.comments|length }} </small>
-			<p style="color:red;"> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
-			<hr />
+
 		{% endfor %}
 	</div>
 	</div>
 
 
 {# {{ pagination.info }} #}
-{{ pagination.links }}
+{{ pagination.links }} 
 
 
 {% endblock %}

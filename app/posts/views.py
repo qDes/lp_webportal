@@ -50,7 +50,7 @@ def add_comment():
     return redirect(get_redirect_target())
 
 @blueprint.route('/posts/delete_comment', methods=['POST'])
-@admin_required
+@login_required
 def delete_comment():
     form = DeleteForm()
     id_ = form.id_.data
@@ -59,13 +59,13 @@ def delete_comment():
     return redirect(get_redirect_target())
 
 @blueprint.route('/posts/delete_post', methods=['POST'])
-@admin_required
+@login_required
 def delete_post():
     form = DeleteForm()
     id_ = form.id_.data
     post = Post.objects(id=id_).get()
     post.delete()
-    return redirect(get_redirect_target())
+    return redirect(url_for('posts.index'))
 
 
 @blueprint.route('/posts/add_post')
