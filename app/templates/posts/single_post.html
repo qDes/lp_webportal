@@ -7,7 +7,9 @@
 	{% endfor %}
 	<h4> {{ post.text }} </h4>
 	<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
-	<p>Author: {{ post.user.username }} </p>
+	<small> Author: <a href="{{ url_for('user.user_profile', user_id=post.user.id | string) }}"style="font-size: 150%"> {{ post.user.username }} </a> </small>
+	<p>tag: <a href="{{ url_for('posts.view_tag', tag=post.tag) }}"style="font-size: 150%"> #{{ post.tag }} </a></p>
+
 	{% include "delete_post.html" %}
 
 	{% if post.comments %}
@@ -17,12 +19,12 @@
 				    <div class="card-body">
 				        <p class="card-text">{{ comment.text }}</p>
 				        <p class="card-text">
-				            <small>Posted: {{ comment.created.strftime('%d/%m/%Y %H:%M:%S') }} | 
-				                Author: {{ comment.from_user.username }}</small>
+				            <small>Posted: {{ comment.created.strftime('%d/%m/%Y %H:%M:%S') }}  </small> 
+
+				            <small> Author: <a href="{{ url_for('user.user_profile', user_id=comment.from_user.id | string) }}"style="font-size: 150%"> {{ comment.from_user.username }} </a> </small>
 				        </p>
 				        
-				        {% if current_user.is_admin or current_user.username == comment.from_user.username   %}
-				        {{ comment.id }}
+				        {% if current_user.is_admin or current_user.username == comment.from_user.username  %}
 				        	<form action="{{ url_for('posts.delete_comment') }}" method="POST" class=delete-entry>
           						<input type="hidden" name="id_" value="{{ comment.id }}">
           						<input type="submit" value="Delete" />
