@@ -36,6 +36,21 @@ def single_post(post_id):
             post=my_post,comment_form=form)
 
 
+@blueprint.route('/posts/tag/<string:tag>')
+def view_tag(tag):
+    title = f"Tag: {tag}"
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    posts_list = Post.objects(tag=tag).paginate(page=page,per_page=10)
+    pagination = Pagination(page=page,
+            total = Post.objects(tag=tag).count(), css_framework='bootstrap4',
+            search=search, record_name='posts')
+    return render_template('posts/tag_page.html',page_title=title,
+            posts_list=posts_list, pagination=pagination)
+
 @blueprint.route('/posts/comment', methods=['POST'])
 @login_required
 def add_comment():
