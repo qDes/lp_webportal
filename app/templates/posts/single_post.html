@@ -9,6 +9,13 @@
 	<p> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
 	<small> Author: <a href="{{ url_for('user.user_profile', user_id=post.user.id | string) }}"style="font-size: 150%"> {{ post.user.username }} </a> </small>
 	<p>tag: <a href="{{ url_for('posts.view_tag', tag=post.tag) }}"style="font-size: 150%"> #{{ post.tag }} </a></p>
+	
+	{% if current_user.username == post.user.username  %}
+		<button type="button" class="btn btn-warning">
+			<a href="{{ url_for('posts.edit_post', post_id=post.id | string) }}"style="font-size: 150%"> Edit post </a>
+		</button>
+	{% endif %}
+
 
 	{% include "delete_post.html" %}
 

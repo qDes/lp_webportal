@@ -35,6 +35,31 @@ def single_post(post_id):
     return render_template('posts/single_post.html',page_title=my_post.title,
             post=my_post,comment_form=form)
 
+@blueprint.route('/posts/<string:post_id>/edit')
+@login_required
+def edit_post(post_id):
+    page_title = 'Edit post:'
+    post = Post.objects(id=post_id).get()
+    form = PostAddForm()
+    form.title.data = post.title
+    form.url.data = " ".join(post.urls)
+    form.tag.data = post.tag
+    form.text.data = post.text
+    return render_template("posts/edit_post.html",
+            page_title=page_title,
+            form=form,post_id=post_id)
+
+@blueprint.route('/posts/<string:post_id>/edit_post_proc', methods=['POST'])
+def edit_post_proc(post_id):
+    form = PostAddForm()
+    post = Post.objects(id=post_id).get()
+    post.title = form.title.data
+    post.tag = form.tag.data
+    post.text = form.text.data
+    post.urls = form.url.data.split()
+    post.save()
+    flash('Edited post')
+    return redirect(url_for("posts.index"))
 
 @blueprint.route('/posts/tag/<string:tag>')
 def view_tag(tag):
@@ -99,7 +124,7 @@ def add_post_proc():
     post = Post(title=form.title.data,
             tag=form.tag.data,
             text=form.text.data,
-            urls=[form.url.data],
+            urls=form.url.data.split(),
             user=user,
             )
     post.save()
