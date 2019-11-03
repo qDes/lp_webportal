@@ -35,6 +35,46 @@ def single_post(post_id):
     return render_template('posts/single_post.html',page_title=my_post.title,
             post=my_post,comment_form=form)
 
+@blueprint.route('/posts/<string:post_id>/edit')
+@login_required
+def edit_post(post_id):
+    page_title = 'Edit post:'
+    post = Post.objects(id=post_id).get()
+    form = PostAddForm()
+    form.title.data = post.title
+    form.url.data = " ".join(post.urls)
+    form.tag.data = post.tag
+    form.text.data = post.text
+    return render_template("posts/edit_post.html",
+            page_title=page_title,
+            form=form,post_id=post_id)
+
+@blueprint.route('/posts/<string:post_id>/edit_post_proc', methods=['POST'])
+def edit_post_proc(post_id):
+    form = PostAddForm()
+    post = Post.objects(id=post_id).get()
+    post.title = form.title.data
+    post.tag = form.tag.data
+    post.text = form.text.data
+    post.urls = form.url.data.split()
+    post.save()
+    flash('Edited post')
+    return redirect(url_for("posts.index"))
+
+@blueprint.route('/posts/tag/<string:tag>')
+def view_tag(tag):
+    title = f"Tag: {tag}"
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    posts_list = Post.objects(tag=tag).paginate(page=page,per_page=10)
+    pagination = Pagination(page=page,
+            total = Post.objects(tag=tag).count(), css_framework='bootstrap4',
+            search=search, record_name='posts')
+    return render_template('posts/tag_page.html',page_title=title,
+            posts_list=posts_list, pagination=pagination)
 
 @blueprint.route('/posts/comment', methods=['POST'])
 @login_required
@@ -50,7 +90,7 @@ def add_comment():
     return redirect(get_redirect_target())
 
 @blueprint.route('/posts/delete_comment', methods=['POST'])
-@admin_required
+@login_required
 def delete_comment():
     form = DeleteForm()
     id_ = form.id_.data
@@ -59,13 +99,13 @@ def delete_comment():
     return redirect(get_redirect_target())
 
 @blueprint.route('/posts/delete_post', methods=['POST'])
-@admin_required
+@login_required
 def delete_post():
     form = DeleteForm()
     id_ = form.id_.data
     post = Post.objects(id=id_).get()
     post.delete()
-    return redirect(get_redirect_target())
+    return redirect(url_for('posts.index'))
 
 
 @blueprint.route('/posts/add_post')
@@ -84,7 +124,7 @@ def add_post_proc():
     post = Post(title=form.title.data,
             tag=form.tag.data,
             text=form.text.data,
-            urls=[form.url.data],
+            urls=form.url.data.split(),
             user=user,
             )
     post.save()

@@ -1,0 +1,6 @@
+{% if current_user.is_admin or current_user.username == post.user.username  %}
+	<form action="{{ url_for('posts.delete_post') }}" method="POST" class=delete-entry>
+			<input type="hidden" name="id_" value="{{ post.id }}">
+			<input type="submit" value="Delete post" class="btn-danger"/>
+	</form>
+{% endif %}

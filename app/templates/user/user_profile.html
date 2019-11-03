@@ -1,13 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block content %}
-{% include "messages.html" %}
-<div class="row">
-	<div class="posts-index">
-		<h2> Posts </h2>
+{% block content %}		
+	User page.
+	{{ pagination.links }} 
 
-	{{ pagination.links }}
-		{% for post in posts_list.items %}
+		{% for post in user_posts.items %}
 
 		<div class="card" style="width: 40rem; background-color: #91FEE5;">
 		{% for url in post.urls %}
@@ -18,23 +15,14 @@
 		    <p class="card-text">{{ post.text }}</p>
 		    {# <small style="color:;"> Author: {{ post.user.username }}</small> <br> #}
 		  	<small> Author: <a href="{{ url_for('user.user_profile', user_id=post.user.id | string) }}"style="font-size: 150%"> {{ post.user.username }} </a> </small>
-		  	<p> <a href="{{ url_for('posts.view_tag', tag=post.tag) }}"style="font-size: 150%"> #{{ post.tag }} </a></p>
+
 		   	<p style="color:;"> {{ post.posted.strftime('%d/%m/%Y %H:%M') }} </p>
 		   	<small style=""> Comments: {{ post.comments|length }} </small> 
-
 		   	{% include "delete_post.html" %}
 		  </div>
 		</div>
 
-
 		{% endfor %}
-	</div>
-	</div>
-
-
-{# {{ pagination.info }} #}
-{{ pagination.links }} 
-
+	{{ pagination.links }} 
 
 {% endblock %}
-		

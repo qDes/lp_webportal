@@ -1,6 +1,9 @@
-from flask import render_template, Blueprint, current_app, redirect, url_for, flash
+from flask import render_template, Blueprint, current_app, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, current_user
+from flask_paginate import Pagination, get_page_parameter
+
 from app.user.models import User
+from app.posts.models import Post
 from app.user.forms import LoginForm, RegistrationForm
 from app.utils import get_redirect_target
 
@@ -33,7 +36,7 @@ def process_login():
 def logout():
     logout_user()
     flash("Logout")
-    return redirect(get_redirect_target())
+    return redirect(url_for('posts.index'))
 
 @blueprint.route('/register')
 def register():
@@ -59,3 +62,20 @@ def process_reg():
                 flash("Error in field {}: {}".format(getattr(form,field).label.text, error))
 
         return redirect(url_for('user.register'))
+
+
+@blueprint.route("/<string:user_id>")
+def user_profile(user_id):
+    title = "User profile"
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    user_id = user_id
+    user_posts = Post.objects(user=user_id).order_by("-posted").paginate(page=page,per_page=10)
+    pagination = Pagination(page=page,
+            total = Post.objects(user=user_id).count(), css_framework='bootstrap4',
+            search=search, record_name='posts')
+    return render_template('user/user_profile.html', title=title,
+            user_posts = user_posts, pagination=pagination)
