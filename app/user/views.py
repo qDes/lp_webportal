@@ -78,4 +78,4 @@ def user_profile(user_id):
             total = Post.objects(user=user_id).count(), css_framework='bootstrap4',
             search=search, record_name='posts')
     return render_template('user/user_profile.html', title=title,
-            user_posts = user_posts, pagination=pagination)
+            posts_list = user_posts, pagination=pagination)
