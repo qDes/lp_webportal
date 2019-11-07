@@ -2,6 +2,9 @@ key1
 key1.pub
 config.py
 *.swp
+*.json
+*.db
+*.rdb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
