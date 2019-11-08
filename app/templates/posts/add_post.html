@@ -3,7 +3,7 @@
 {% block content %}
 
 	{% include "messages.html" %}
-
+		<h2> new post </h2>
 			<form action="{{ url_for('posts.add_post_proc') }}" method="POST">
 			<div class="form-group">
 					{{ form.title.label }}
