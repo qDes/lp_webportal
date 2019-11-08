@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}		
-	
+	<div style="width: 70%">
 	{% for url in post.urls %}
 		<img src="{{ url }}" class="img-fluid" alt="Responsive image">
 	{% endfor %}
@@ -15,9 +15,9 @@
 			<a href="{{ url_for('posts.edit_post', post_id=post.id | string) }}"style="font-size: 150%"> Edit post </a>
 		</button>
 	{% endif %}
+	</div>
 
-
-	{% include "delete_post.html" %}
+	{% include "posts/delete_post.html" %}
 
 	{% if post.comments %}
 	<h4> Comments: </h4>

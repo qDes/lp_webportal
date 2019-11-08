@@ -17,8 +17,8 @@ celery_app = Celery('tasks', broker='redis://localhost:6379/0')
 def get_vk_pics():
     print('run pic parses')
     with flask_app.app_context():
-        vk_parser.write_posts(login,password, 30, -100817956, 'vk_pars1')
+        vk_parser.write_posts(login,password, 10, -100817956, 'vk_pars1')
 
 @celery_app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(crontab(hour='*/5'), get_vk_pics.s())
+    sender.add_periodic_task(crontab(hour='*/2'), get_vk_pics.s())

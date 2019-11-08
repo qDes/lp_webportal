@@ -15,4 +15,4 @@ class PostAddForm(FlaskForm):
     url  = StringField('pic url', render_kw = {"class":"form-control"})
     tag = StringField("Tag", render_kw={"class":"form-control"})
     text = TextAreaField("Text:", render_kw = {"class":"form-control"})
-    submit = SubmitField("Add post!", render_kw={"class":"btn btn-primary"})
+    submit = SubmitField("Send post!", render_kw={"class":"btn btn-primary"})

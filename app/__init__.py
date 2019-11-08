@@ -1,6 +1,5 @@
 from flask import Flask
-from flask import render_template, current_app, flash, redirect, url_for
-from flask_login import LoginManager, login_required, current_user
+from flask_login import LoginManager
 
 from app.db import db
 from app.posts.views import blueprint as posts_blueprint
