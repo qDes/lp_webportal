@@ -1,10 +1,12 @@
 	
-{{ pagination.links }} 
-	{% for post in posts_list.items %}
+<div style="margin-left: 33%;"> {{ pagination.links }} </div>
+
+{% for post in posts_list.items %}
 
 
 	<div class="card" style="width: 50%;min-width: 200px; background-color: #DCDCDC; margin-left: auto; margin-right: auto;">
 	{% for url in post.urls %}
+
 	  <img src="{{ url }}" class="card-img-top" alt="...">
 	{% endfor %}
 	  <div class="card-body">
@@ -22,7 +24,6 @@
 
 
 	{% endfor %}
-</div>
-</div>
 
-{{ pagination.links }} 
+
+<div style="margin-left: 33%;"> {{ pagination.links }} </div>
