@@ -35,7 +35,7 @@ def write_posts(login, password, count, owner_id, username):
     urls = get_pic_urls(login,password, count, owner_id)
     user = User.objects(username=username).get()
     posts_value = Post.objects.count()
-    last_posts_urls = get_last_urls(50)
+    last_posts_urls = get_last_urls(500)
     for url in urls:
         if url not in last_posts_urls:
             Post(title=f"Post {posts_value}",

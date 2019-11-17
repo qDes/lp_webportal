@@ -11,7 +11,7 @@
 	{% endfor %}
 	  <div class="card-body">
 	  	<a href="{{ url_for('posts.single_post', post_id=post.id | string) }}"style="color:white;font-size: 200%"> {{ post.title }} </a>
-	    <p class="card-text">{{ post.text }}</p>
+	    <p class="card-text">{{ post.text|urlize(40, true) }}</p>
 	    {# <small style="color:;"> Author: {{ post.user.username }}</small> <br> #}
 	  	<small> Author: <a href="{{ url_for('user.user_profile', user_id=post.user.id | string) }}"style="font-size: 100%"> {{ post.user.username }} </a> </small>
 	  	<p> <a href="{{ url_for('posts.view_tag', tag=post.tag) }}"style="color:red;font-size: 100%"> #{{ post.tag }} </a></p>

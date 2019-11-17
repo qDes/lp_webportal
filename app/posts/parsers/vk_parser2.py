@@ -76,7 +76,7 @@ def write_json(data):
 def write_to_db():
     posts = take_posts()
     user = User.objects(username='parser').get()
-    last_posts_urls = get_last_urls(50)
+    last_posts_urls = get_last_urls(500)
     posts_value = Post.objects.count()
     for post in posts:
         data = get_data(post)
